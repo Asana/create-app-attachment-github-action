@@ -1,0 +1,21 @@
+name: 'Create Asana attachment'
+description: 'Create Asana attachment'
+inputs:
+  asana-secret:
+    description: 'Asana secret'
+    required: true
+    default: ''
+  allowed-projects:
+    description: 'allowed Asana projects'
+    required: false
+    default: ''
+  blocked-projects:
+    description: 'blocked Asana projects'
+    required: false
+    default: ''
+outputs:
+  status:
+    description: 'status'
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
