@@ -10800,7 +10800,15 @@ axios_retry_default()(axiosInstance, {
 const WRONG_TRIGGER = "Only pull_request trigger is supported";
 const BOTH_PROJECT_LISTS_ARE_NOT_EMPTY = "Forbidden to specify allowed and blocked lists at the same time";
 
+;// CONCATENATED MODULE: ./src/constants/triggers.ts
+const allowed = [
+    "pull_request",
+    "pull_request_review",
+    "pull_request_review_comment",
+];
+
 ;// CONCATENATED MODULE: ./src/utils/index.ts
+
 
 
 const getProjectsFromInput = (inputName) => {
@@ -10810,7 +10818,7 @@ const getProjectsFromInput = (inputName) => {
     return projects.split("\n").map((gid) => `${gid}`);
 };
 const validateTrigger = (eventName) => {
-    if (eventName !== "pull_request")
+    if (!allowed.includes(eventName))
         throw new Error(WRONG_TRIGGER);
 };
 const validateProjectLists = (allowedProjects, blockedProjects) => {

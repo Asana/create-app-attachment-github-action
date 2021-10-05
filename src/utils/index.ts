@@ -1,6 +1,7 @@
 import { AxiosError } from "axios";
 import { getInput } from "@actions/core";
 import * as ERRORS from "../constants/errors";
+import * as TRIGGERS from "../constants/triggers";
 
 export const getProjectsFromInput = (inputName: string): String[] => {
   const projects = getInput(inputName);
@@ -10,7 +11,8 @@ export const getProjectsFromInput = (inputName: string): String[] => {
 };
 
 export const validateTrigger = (eventName: string) => {
-  if (eventName !== "pull_request") throw new Error(ERRORS.WRONG_TRIGGER);
+  if (!TRIGGERS.allowed.includes(eventName))
+    throw new Error(ERRORS.WRONG_TRIGGER);
 };
 
 export const validateProjectLists = (
