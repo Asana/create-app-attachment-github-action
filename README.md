@@ -2,9 +2,11 @@
 
 Always be in the loop on the status of a pull request with this GitHub Action, which connects an attachment to Asana.
 
-How does it work? The GitHub Action will check the description of the pull request for the specific Asana task URL and automatically create an attachment with the latest status from GitHub.
+How does it work? The GitHub Action will check the description of the pull request for the specific Asana task URL and automatically create an attachment with the latest status from GitHub as the authenticated user. 
 
 This is available to all Asana users on Premium, Business, and Enterprise plans. 
+
+To get notified when the pull request status changes in Asana, check out [GitHub Action](https://github.com/Asana/comment-on-task-github-action).
 
 To learn more about using the GitHub + Asana integration, visit the [Asana Guide](https://asana.com/guide/help/api/github).
 
@@ -14,17 +16,17 @@ To learn more about using the GitHub + Asana integration, visit the [Asana Guide
 
 #### Step 1: Generate a secret token for your Action
 
-* go to https://github.integrations.asana.plus/auth?domainId=ghactions
-* authorize the Asana app and the GitHub app
-* copy the generated secret
+* Go to https://github.integrations.asana.plus/auth?domainId=ghactions
+* Authorize the Asana app and the GitHub app
+* Copy the generated secret
 
 #### Step 2: Set up a repository secret for the secret token
 
-* go to settings page for your repository
-* click on *Secrets* on left sidebar
-* click **New repository secret**
-* create a new secret called `ASANA_SECRET` with value set to the secret token
-* click **Add secret**
+* Go to settings page for your repository
+* Click on *Secrets* on left sidebar
+* Click **New repository secret**
+* Create a new secret called `ASANA_SECRET` with value set to the secret token
+* Click **Add secret**
 
 #### Step 3: Create a workflow file
 
@@ -55,7 +57,19 @@ This workflow set up in the file above will run whenever a pull request is opene
 
 #### Step 4: Enable the GitHub integration in your Asana project
 
-Follow the steps in the [Asana Guide]((https://asana.com/guide/help/api/github)) to enable the GitHub integration in your Asana project. This will turn GitHub attachments into informative widgets that show information about the pull request on the Asana task.
+<img src="assets/customize-button.png" alt="The 'customize' button in the project view">
+
+1. Navigate to a project where you would like to activate the integration
+2. Click on the Customize Menu drop-down in the right-hand corner
+3. Select +Add app
+
+<img src="assets/github-app-in-the-gallery.png" alt="The 'customize' button in the project view">
+
+4. Select GitHub
+5. You’ll be prompted to authorize your GitHub account. Please follow the instructions
+6. The GitHub integration will be installed at a project level. In the following screen, you can select the projects you would like to add the integration to
+7. Now, you can use the GitHub integration in any of the projects to which it has been added
+
 
 #### Step 5: Adapt the GitHub Action to your workflow
 
