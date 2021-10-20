@@ -30,7 +30,7 @@ To learn more about using the GitHub + Asana integration, visit the [Asana Guide
 
 Pick a name and create a `.yml` workflow file with that name in the `.github/workflows/` directory (e.g, `.github/workflows/create-asana-comment.yml`). 
 
-This GitHub action runs in the context of a pull request. This means we support only [`pull_request`](https://docs.github.com/en/actions/learn-github-actions/events-that-trigger-workflows#pull_request) event. We provide an example `.github/workflows/create-asana-comment.yml` file below.
+This GitHub action runs in the context of a pull request. This means we support only [`pull_request`](https://docs.github.com/en/actions/learn-github-actions/events-that-trigger-workflows#pull_request) event. We provide an example [`.github/workflows/create-asana-comment.yml`](https://github.com/Asana/create-app-attachment-github-action/blob/main/example-workflow-file.yaml) file below.
 
 ```yaml
 on:
