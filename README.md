@@ -61,11 +61,11 @@ This workflow set up in the file above will run whenever a pull request is opene
 
 1. Navigate to a project where you would like to activate the integration
 2. Click on the Customize Menu drop-down in the right-hand corner
-3. Select +Add app
+3. Select **+Add app**
 
 <img src="assets/github-app-in-the-gallery.png" alt="The 'customize' button in the project view">
 
-4. Select GitHub
+4. Select **GitHub**
 5. You’ll be prompted to authorize your GitHub account. Please follow the instructions
 6. The GitHub integration will be installed at a project level. In the following screen, you can select the projects you would like to add the integration to
 7. Now, you can use the GitHub integration in any of the projects to which it has been added
