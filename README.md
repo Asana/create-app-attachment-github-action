@@ -16,11 +16,17 @@ To learn more about using the GitHub + Asana integration, visit the [Asana Guide
 
 #### Step 1: Generate a secret token for your Action
 
+Skip this step if you've done this for a different GitHub action for this repository.
+
 * Go to https://github.integrations.asana.plus/auth?domainId=ghactions
 * Authorize the Asana app and the GitHub app
-* Copy the generated secret
+* Copy the generated secret. **Do not share this secret with anyone!**
+
+At any point, you can revoke this generated token at https://github.integrations.asana.plus/auth?domainId=manage_tokens.
 
 #### Step 2: Set up a repository secret for the secret token
+
+Skip this step if you've done this for a different GitHub action for this repository.
 
 * Go to settings page for your repository
 * Click on *Secrets* on left sidebar
@@ -30,9 +36,28 @@ To learn more about using the GitHub + Asana integration, visit the [Asana Guide
 
 #### Step 3: Create a workflow file
 
-Pick a name and create a `.yml` workflow file with that name in the `.github/workflows/` directory (e.g, `.github/workflows/create-asana-comment.yml`). 
+##### Quick Start for Unix Command Line
+To get started quickly, `cd` into the GitHub repository root and checkout the main branch
 
-This GitHub action runs in the context of a pull request. This means we support only [`pull_request`](https://docs.github.com/en/actions/learn-github-actions/events-that-trigger-workflows#pull_request) event. We provide an example [`.github/workflows/create-asana-comment.yml`](https://github.com/Asana/create-app-attachment-github-action/blob/main/example-workflow-file.yaml) file below.
+```sh
+cd <REPOSITORY ROOT>
+git checkout main
+```
+
+Then, run the commands below from the command line to create a workflow file, commit the change, and push it to GitHub. 
+
+```sh
+mkdir -p .github/workflows && curl https://raw.githubusercontent.com/Asana/create-app-attachment-github-action/main/example-workflow-file.yaml --output .github/workflows/create-asana-attachment.yaml
+git add .github/workflows/create-asana-attachment.yaml
+git commit -m "automatically create Asana app attachments when opening pull requests"
+git push
+```
+
+The action should work after this step and attach pull requests to Asana tasks whenever they are opened or reopened. You should now see a file called `.github/workflows/create-asana-attachment.yaml` in your repository on GitHub. Find out how to edit what events trigger the action and see detailed explanation in the next section.
+
+##### Step-by-Step
+
+Instead of running the commands in the previous section, you can create a YAML file with a name of your choosing in `.github/workflows/` directory (e.g., `.github/workflows/create-asana-attachment.yml`. You may have to create the directory.). We provide an example [`.github/workflows/create-asana-attachment.yml`](https://raw.githubusercontent.com/Asana/create-app-attachment-github-action/main/example-workflow-file.yaml) file below.
 
 ```yaml
 on:
@@ -53,25 +78,27 @@ jobs:
         run: echo "Status is ${{ steps.postAttachment.outputs.status }}"
 ```
 
-This workflow set up in the file above will run whenever a pull request is opened or reopened.
+The workflow set up in the file above will run whenever a pull request is opened or reopened. This GitHub action only runs in the context of a pull request so the event triggers must either be the [`pull_request`](https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#pull_request) event, the [`pull_request_review_comment`](https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#pull_request_review_comment) event, or the [`pull_request_review`](https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#pull_request_review) event. 
 
-#### Step 4: Enable the GitHub integration in your Asana project
+Once this file is set up, commit and push your change to the **main branch of your repository.** The GitHub action is now set up, congratulations!
+
+#### Step 4: Enable the GitHub integration in your Asana project (optional)
 
 <img src="assets/customize-button.png" alt="The 'customize' button in the project view">
 
-1. Navigate to a project where you would like to activate the integration
-2. Click on the Customize Menu drop-down in the right-hand corner
-3. Select **+Add app**
+- Navigate to a project where you would like to activate the integration 
+- Click on the Customize Menu drop-down in the right-hand corner (1)
+- Select **+Add app** (2)
 
 <img src="assets/github-app-in-the-gallery.png" alt="The 'customize' button in the project view">
 
-4. Select **GitHub**
-5. You’ll be prompted to authorize your GitHub account. Please follow the instructions
-6. The GitHub integration will be installed at a project level. In the following screen, you can select the projects you would like to add the integration to
-7. Now, you can use the GitHub integration in any of the projects to which it has been added
+- Select **GitHub**
+- You’ll be prompted to authorize your GitHub account. Please follow the instructions
+- The GitHub integration will be installed at a project level. In the following screen, you can select the projects you would like to add the integration to
+- Now, you can use the GitHub integration in any of the projects to which it has been added
 
 
-#### Step 5: Adapt the GitHub Action to your workflow
+#### Step 5: Adapt the GitHub Action to your workflow (optional)
 
 ##### Available parameters
 
@@ -124,6 +151,10 @@ jobs:
       - name: Get status
         run: echo "Status is ${{ steps.postAttachment.outputs.status }}"
 ```
+
+#### Revoking your secret token
+
+If at any point you want to stop using your GitHub action or want to rotate your secret token, you may invalidate all of your tokens at https://github.integrations.asana.plus/auth?domainId=manage_tokens
 
 ## Contributing
 

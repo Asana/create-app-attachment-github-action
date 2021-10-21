@@ -1,16 +1,20 @@
-name: 'Create Asana attachment'
-description: 'Create Asana attachment'
+name: 'Attach pull request to Asana task'
+description: 'Check the pull request description for specific Asana task URLs and add the pull request as an attachment to those tasks'
+author: Asana
+branding:
+  icon: circle
+  color: green
 inputs:
   asana-secret:
-    description: 'Asana secret'
+    description: 'The Asana secret for the action. Read more about how to generate this secret at https://github.com/Asana/create-app-attachment-github-action#step-2-set-up-a-repository-secret-for-the-secret-token'
     required: true
     default: ''
   allowed-projects:
-    description: 'allowed Asana projects'
+    description: 'List of allowed projects. The action will only add comments to tasks in these projects. Only one of allowed-projects or blocked-projects can be specified.'
     required: false
     default: ''
   blocked-projects:
-    description: 'blocked Asana projects'
+    description: 'List of allowed projects. The action will not add comments to tasks or subtasks of tasks in any of these projects. Only one of allowed-projects or blocked-projects can be specified.'
     required: false
     default: ''
 outputs:
