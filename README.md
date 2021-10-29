@@ -70,7 +70,7 @@ jobs:
     name: Create pull request attachments on Asana tasks
     steps:
       - name: Create pull request attachments
-        uses: Asana/create-app-attachment-github-action@v1.0
+        uses: Asana/create-app-attachment-github-action@latest
         id: postAttachment
         with:
           asana-secret: ${{ secrets.ASANA_SECRET }}
@@ -121,7 +121,7 @@ jobs:
     name: Create pull request attachments on Asana tasks
     steps:
       - name: Create pull request attachments
-        uses: Asana/create-app-attachment-github-action@v1.0
+        uses: Asana/create-app-attachment-github-action@latest
         id: postAttachment
         with:
           asana-secret: ${{ secrets.ASANA_SECRET }}
@@ -141,7 +141,7 @@ jobs:
     name: Create pull request attachments on Asana tasks
     steps:
       - name: Create pull request attachments
-        uses: Asana/create-app-attachment-github-action@v1.0
+        uses: Asana/create-app-attachment-github-action@latest
         id: postAttachment
         with:
           asana-secret: ${{ secrets.ASANA_SECRET }}
