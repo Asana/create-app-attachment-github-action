@@ -167,3 +167,4 @@ Unit tests should be run via npm command:
 ### Formatting and Linting
 
 ```npm run lint```
+
