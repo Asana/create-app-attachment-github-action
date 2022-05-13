@@ -1,0 +1,19 @@
+on:
+  pull_request:
+    types: [opened, reopened, edited]
+
+jobs:
+  create-asana-attachment-job:
+    runs-on: ubuntu-latest
+    name: Post an attachment
+    steps:
+      - name: Post an attachment
+        # uses: Asana/create-app-attachment-github-action@v1.1
+        uses: vadymBalaban/create-app-attachment-github-action@v1.1
+        id: postAttachment
+        with:
+          asana-secret: ${{ secrets.ASANA_SECRET }}
+          blocked-projects: |
+            1117470676484494
+      - name: Get status
+        run: echo "Status is ${{ steps.postAttachment.outputs.status }}"
