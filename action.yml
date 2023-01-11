@@ -17,6 +17,14 @@ inputs:
     description: 'List of allowed projects. The action will not add comments to tasks or subtasks of tasks in any of these projects. Only one of allowed-projects or blocked-projects can be specified.'
     required: false
     default: ''
+  asana-project-gid:
+    description: 'The Asana Project GID to use to link the PR (both task and project GIDs are required)'
+    required: false
+    default: ''
+  asana-task-gid:
+    description: 'The Asana Task GID to use to link the PR (both task and project GIDs are required)'
+    required: false
+    default: ''
 outputs:
   status:
     description: 'status'
