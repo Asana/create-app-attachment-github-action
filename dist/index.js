@@ -13055,6 +13055,8 @@ var axios_retry = __nccwpck_require__(9179);
 var axios_retry_default = /*#__PURE__*/__nccwpck_require__.n(axios_retry);
 ;// CONCATENATED MODULE: ./src/constants/inputs.ts
 const ASANA_SECRET = "asana-secret";
+const ASANA_PROJECT_GID = "asana-project-gid";
+const ASANA_TASK_GID = "asana-task-gid";
 const ALLOWED_PROJECTS = "allowed-projects";
 const BLOCKED_PROJECTS = "blocked-projects";
 
@@ -13100,7 +13102,12 @@ const allowed = [
     "pull_request_review_comment",
 ];
 
+;// CONCATENATED MODULE: ./src/constants/asana.ts
+const asana_BASE_URL = "https://app.asana.com/0";
+
 ;// CONCATENATED MODULE: ./src/utils/index.ts
+
+
 
 
 
@@ -13119,6 +13126,14 @@ const validateProjectLists = (allowedProjects, blockedProjects) => {
         throw new Error(BOTH_PROJECT_LISTS_ARE_NOT_EMPTY);
 };
 const isAxiosError = (e) => e.isAxiosError;
+const createPRDescription = (prDescription) => {
+    const projectGid = (0,core.getInput)(ASANA_PROJECT_GID);
+    const taskGid = (0,core.getInput)(ASANA_TASK_GID);
+    const asanaTaskLink = `${asana_BASE_URL}/${projectGid}/${taskGid}`;
+    return projectGid && taskGid
+        ? `${prDescription}\n\n${asanaTaskLink}`
+        : prDescription;
+};
 
 ;// CONCATENATED MODULE: ./src/index.ts
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -13146,7 +13161,7 @@ const run = () => __awaiter(void 0, void 0, void 0, function* () {
         const result = yield requests_axios.post(ACTION_URL, {
             allowedProjects,
             blockedProjects,
-            pullRequestDescription: (_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.body,
+            pullRequestDescription: createPRDescription((_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.body),
             pullRequestName: (_b = github.context.payload.pull_request) === null || _b === void 0 ? void 0 : _b.title,
             pullRequestNumber: (_c = github.context.payload.pull_request) === null || _c === void 0 ? void 0 : _c.number,
             pullRequestURL: (_d = github.context.payload.pull_request) === null || _d === void 0 ? void 0 : _d.html_url,
