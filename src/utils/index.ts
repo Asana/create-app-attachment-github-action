@@ -2,6 +2,8 @@ import { AxiosError } from "axios";
 import { getInput } from "@actions/core";
 import * as ERRORS from "../constants/errors";
 import * as TRIGGERS from "../constants/triggers";
+import * as INPUTS from "../constants/inputs";
+import * as ASANA from "../constants/asana";
 
 export const getProjectsFromInput = (inputName: string): String[] => {
   const projects = getInput(inputName);
@@ -24,3 +26,14 @@ export const validateProjectLists = (
 };
 
 export const isAxiosError = (e: any): e is AxiosError => e.isAxiosError;
+
+export const createPRDescription = (prDescription?: string) => {
+  const projectGid = getInput(INPUTS.ASANA_PROJECT_GID);
+  const taskGid = getInput(INPUTS.ASANA_TASK_GID);
+
+  const asanaTaskLink = `${ASANA.BASE_URL}/${projectGid}/${taskGid}`;
+
+  return projectGid && taskGid
+    ? `${prDescription}\n\n${asanaTaskLink}`
+    : prDescription;
+};

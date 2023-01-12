@@ -16,7 +16,9 @@ const run = async () => {
     const result = await axios.post(REQUESTS.ACTION_URL, {
       allowedProjects,
       blockedProjects,
-      pullRequestDescription: context.payload.pull_request?.body,
+      pullRequestDescription: utils.createPRDescription(
+        context.payload.pull_request?.body
+      ),
       pullRequestName: context.payload.pull_request?.title,
       pullRequestNumber: context.payload.pull_request?.number,
       pullRequestURL: context.payload.pull_request?.html_url,
@@ -25,9 +27,10 @@ const run = async () => {
     console.log(result.data);
     setOutput("status", result.status);
   } catch (error) {
-    if (utils.isAxiosError(error)) console.log(error.response?.data || "Unknown error");
+    if (utils.isAxiosError(error))
+      console.log(error.response?.data || "Unknown error");
     if (error instanceof Error) setFailed(error.message);
-    else setFailed("Unknown error")
+    else setFailed("Unknown error");
   }
 };
 
