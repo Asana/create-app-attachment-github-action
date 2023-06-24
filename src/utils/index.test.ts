@@ -26,6 +26,7 @@ describe("validateTrigger", () => {
 
   test("should not throw an error if wrong eventType was provided", () => {
     expect(() => utils.validateTrigger("pull_request")).not.toThrow();
+    expect(() => utils.validateTrigger("pull_request_target")).not.toThrow();
     expect(() => utils.validateTrigger("pull_request_review")).not.toThrow();
     expect(() =>
       utils.validateTrigger("pull_request_review_comment")

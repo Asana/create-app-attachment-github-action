@@ -14999,12 +14999,13 @@ axios_retry_default()(axiosInstance, {
 /* harmony default export */ const requests_axios = (axiosInstance);
 
 ;// CONCATENATED MODULE: ./src/constants/errors.ts
-const WRONG_TRIGGER = "Only pull_request, pull_request_review and pull_request_review_comment triggers are supported";
+const WRONG_TRIGGER = "Only pull_request, pull_request_target, pull_request_review and pull_request_review_comment triggers are supported";
 const BOTH_PROJECT_LISTS_ARE_NOT_EMPTY = "Forbidden to specify allowed and blocked lists at the same time";
 
 ;// CONCATENATED MODULE: ./src/constants/triggers.ts
 const allowed = [
     "pull_request",
+    "pull_request_target",
     "pull_request_review",
     "pull_request_review_comment",
 ];

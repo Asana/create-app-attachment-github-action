@@ -2,9 +2,9 @@
 
 Always be in the loop on the status of a pull request with this GitHub Action, which connects an attachment to Asana.
 
-How does it work? The GitHub Action will check the description of the pull request for the specific Asana task URL and automatically create an attachment with the latest status from GitHub as the authenticated user. 
+How does it work? The GitHub Action will check the description of the pull request for the specific Asana task URL and automatically create an attachment with the latest status from GitHub as the authenticated user.
 
-This is available to all Asana users on Premium, Business, and Enterprise plans. 
+This is available to all Asana users on Premium, Business, and Enterprise plans.
 
 To get notified when the pull request status changes in Asana, check out [GitHub Action](https://github.com/Asana/comment-on-task-github-action).
 
@@ -44,7 +44,7 @@ cd <REPOSITORY ROOT>
 git checkout main
 ```
 
-Then, run the commands below from the command line to create a workflow file, commit the change, and push it to GitHub. 
+Then, run the commands below from the command line to create a workflow file, commit the change, and push it to GitHub.
 
 ```sh
 mkdir -p .github/workflows && curl https://raw.githubusercontent.com/Asana/create-app-attachment-github-action/main/example-workflow-file.yaml --output .github/workflows/create-asana-attachment.yaml
@@ -78,7 +78,7 @@ jobs:
         run: echo "Status is ${{ steps.postAttachment.outputs.status }}"
 ```
 
-The workflow set up in the file above will run whenever a pull request is opened or reopened. This GitHub action only runs in the context of a pull request so the event triggers must either be the [`pull_request`](https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#pull_request) event, the [`pull_request_review_comment`](https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#pull_request_review_comment) event, or the [`pull_request_review`](https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#pull_request_review) event. 
+The workflow set up in the file above will run whenever a pull request is opened or reopened. This GitHub action only runs in the context of a pull request so the event triggers must either be the [`pull_request`](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request) event, the [`pull_request_target`](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_target) event, the [`pull_request_review_comment`](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_review_comment) event, or the [`pull_request_review`](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_review) event.
 
 Once this file is set up, commit and push your change to the **main branch of your repository.** The GitHub action is now set up, congratulations!
 
@@ -86,7 +86,7 @@ Once this file is set up, commit and push your change to the **main branch of yo
 
 <img src="assets/customize-button.png" alt="The 'customize' button in the project view">
 
-- Navigate to a project where you would like to activate the integration 
+- Navigate to a project where you would like to activate the integration
 - Click on the Customize Menu drop-down in the right-hand corner (1)
 - Select **+Add app** (2)
 
@@ -112,7 +112,7 @@ Once this file is set up, commit and push your change to the **main branch of yo
 
 If values are provided for neither the `allowed-projects` parameter or the `blocked-projects` parameter, the GitHub action will be able to add attachments to any task. Providing values for both ```allowed-projects``` and ```blocked-projects``` lists at the same time will result in an error.
 
-In the workflow file below, we provide an allowlist to the GitHub Action. The Action will only create pull request attachments on tasks that are in project 1125036528002799 or 1192160553314033. 
+In the workflow file below, we provide an allowlist to the GitHub Action. The Action will only create pull request attachments on tasks that are in project 1125036528002799 or 1192160553314033.
 
 ```yaml
 jobs:
