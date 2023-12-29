@@ -15062,6 +15062,7 @@ const run = () => __awaiter(void 0, void 0, void 0, function* () {
             pullRequestURL: (_d = github.context.payload.pull_request) === null || _d === void 0 ? void 0 : _d.html_url,
         });
         console.log(result.data);
+        (0,core.setOutput)("data", result.data);
         (0,core.setOutput)("status", result.status);
     }
     catch (error) {

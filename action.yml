@@ -20,6 +20,8 @@ inputs:
 outputs:
   status:
     description: 'status'
+  data:
+    description: 'Array of objects with task and result properties'
 runs:
   using: 'node16'
   main: 'dist/index.js'
