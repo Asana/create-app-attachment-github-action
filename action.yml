@@ -17,6 +17,10 @@ inputs:
     description: 'List of allowed projects. The action will not add comments to tasks or subtasks of tasks in any of these projects. Only one of allowed-projects or blocked-projects can be specified.'
     required: false
     default: ''
+  always-pass:
+    description: 'If true, the action will always pass, even if it fails to add the pull request as an attachment to any tasks. To be used if failing to add the pull request as an attachment is not a critical failure.'
+    required: false
+    default: ''
 outputs:
   status:
     description: 'status'
