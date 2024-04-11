@@ -1,7 +1,8 @@
-import { AxiosError } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import { getInput } from "@actions/core";
 import * as ERRORS from "../constants/errors";
 import * as TRIGGERS from "../constants/triggers";
+import { ALWAYS_PASS } from "../constants/inputs";
 
 export const getProjectsFromInput = (inputName: string): String[] => {
   const projects = getInput(inputName);
@@ -24,3 +25,28 @@ export const validateProjectLists = (
 };
 
 export const isAxiosError = (e: any): e is AxiosError => e.isAxiosError;
+
+export const shouldPass = (): boolean => {
+  return getInput(ALWAYS_PASS) === "true";
+};
+
+interface ErrorInfo {
+  message: string;
+  status: number;
+  response?: AxiosResponse;
+}
+export const getErrorInfo = (err: any): ErrorInfo => {
+  const errorInfo: ErrorInfo = {
+    message: "Unknown error",
+    status: 500,
+  };
+  if (err instanceof Error) {
+    errorInfo.message = err.message;
+  }
+  if (isAxiosError(err) && err.response) {
+    errorInfo.response = err.response;
+    errorInfo.status = err.response.status;
+  }
+
+  return errorInfo;
+};

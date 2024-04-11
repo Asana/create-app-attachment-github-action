@@ -25,9 +25,20 @@ const run = async () => {
     console.log(result.data);
     setOutput("status", result.status);
   } catch (error) {
-    if (utils.isAxiosError(error)) console.log(error.response?.data || "Unknown error");
-    if (error instanceof Error) setFailed(error.message);
-    else setFailed("Unknown error")
+    const errorInfo = utils.getErrorInfo(error);
+    console.log(`Failed with message: ${errorInfo.message}`);
+    console.log(`Failed with status: ${errorInfo.status}`);
+    setOutput("status", errorInfo.status);
+    if (errorInfo.response) {
+      console.log('Response data:', errorInfo.response.data);
+    }
+
+    if (utils.shouldPass()) {
+      console.log('Always pass is enabled, skipping failure');
+      return;
+    }
+    
+    setFailed(errorInfo.message);
   }
 };
 

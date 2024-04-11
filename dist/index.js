@@ -14808,10 +14808,11 @@ exports.BOTH_PROJECT_LISTS_ARE_NOT_EMPTY = "Forbidden to specify allowed and blo
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.BLOCKED_PROJECTS = exports.ALLOWED_PROJECTS = exports.ASANA_SECRET = void 0;
+exports.ALWAYS_PASS = exports.BLOCKED_PROJECTS = exports.ALLOWED_PROJECTS = exports.ASANA_SECRET = void 0;
 exports.ASANA_SECRET = "asana-secret";
 exports.ALLOWED_PROJECTS = "allowed-projects";
 exports.BLOCKED_PROJECTS = "blocked-projects";
+exports.ALWAYS_PASS = "always-pass";
 
 
 /***/ }),
@@ -14894,7 +14895,7 @@ const REQUESTS = __importStar(__nccwpck_require__(9339));
 const allowedProjects = utils.getProjectsFromInput(INPUTS.ALLOWED_PROJECTS);
 const blockedProjects = utils.getProjectsFromInput(INPUTS.BLOCKED_PROJECTS);
 const run = () => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b, _c, _d, _e;
+    var _a, _b, _c, _d;
     try {
         utils.validateTrigger(github_1.context.eventName);
         utils.validateProjectLists(allowedProjects, blockedProjects);
@@ -14910,12 +14911,18 @@ const run = () => __awaiter(void 0, void 0, void 0, function* () {
         (0, core_1.setOutput)("status", result.status);
     }
     catch (error) {
-        if (utils.isAxiosError(error))
-            console.log(((_e = error.response) === null || _e === void 0 ? void 0 : _e.data) || "Unknown error");
-        if (error instanceof Error)
-            (0, core_1.setFailed)(error.message);
-        else
-            (0, core_1.setFailed)("Unknown error");
+        const errorInfo = utils.getErrorInfo(error);
+        console.log(`Failed with message: ${errorInfo.message}`);
+        console.log(`Failed with status: ${errorInfo.status}`);
+        (0, core_1.setOutput)("status", errorInfo.status);
+        if (errorInfo.response) {
+            console.log('Response data:', errorInfo.response.data);
+        }
+        if (utils.shouldPass()) {
+            console.log('Always pass is enabled, skipping failure');
+            return;
+        }
+        (0, core_1.setFailed)(errorInfo.message);
     }
 });
 run();
@@ -15003,10 +15010,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isAxiosError = exports.validateProjectLists = exports.validateTrigger = exports.getProjectsFromInput = void 0;
+exports.getErrorInfo = exports.shouldPass = exports.isAxiosError = exports.validateProjectLists = exports.validateTrigger = exports.getProjectsFromInput = void 0;
 const core_1 = __nccwpck_require__(2186);
 const ERRORS = __importStar(__nccwpck_require__(1231));
 const TRIGGERS = __importStar(__nccwpck_require__(2160));
+const inputs_1 = __nccwpck_require__(9579);
 const getProjectsFromInput = (inputName) => {
     const projects = (0, core_1.getInput)(inputName);
     if (!projects)
@@ -15026,6 +15034,25 @@ const validateProjectLists = (allowedProjects, blockedProjects) => {
 exports.validateProjectLists = validateProjectLists;
 const isAxiosError = (e) => e.isAxiosError;
 exports.isAxiosError = isAxiosError;
+const shouldPass = () => {
+    return (0, core_1.getInput)(inputs_1.ALWAYS_PASS) === "true";
+};
+exports.shouldPass = shouldPass;
+const getErrorInfo = (err) => {
+    const errorInfo = {
+        message: "Unknown error",
+        status: 500,
+    };
+    if (err instanceof Error) {
+        errorInfo.message = err.message;
+    }
+    if ((0, exports.isAxiosError)(err) && err.response) {
+        errorInfo.response = err.response;
+        errorInfo.status = err.response.status;
+    }
+    return errorInfo;
+};
+exports.getErrorInfo = getErrorInfo;
 
 
 /***/ }),
